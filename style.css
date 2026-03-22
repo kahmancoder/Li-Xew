@@ -4,6 +4,7 @@
    ============================================ */
 
 /* ── RESET & BASE ─────────────────────────── */
+
 * {
   margin: 0;
   padding: 0;
@@ -276,12 +277,12 @@ main {
   color: #cccccc;
 }
 .user-badge.role-editeur {
-  background: #1d9e7530;
-  color: #9fe1cb;
+  background:  #ffffff;
+  color:  #9e7230;
 }
 .user-badge.role-admin {
-  background: #a8a4ff30;
-  color: #a8a4ff;
+  background: #ffffff30;
+  color: #a83d3d;
 }
 
 /* ── PAGE TITLE ───────────────────────────── */
@@ -500,8 +501,8 @@ main {
 
 .alert-info {
   background-color: #e6f1fb;
-  color: #0c447c;
-  border-color: #378add;
+  color:  #9e7230;
+  border-color:  #66491d;
 }
 
 /* ── TABLEAU ──────────────────────────────── */

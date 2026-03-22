@@ -6,7 +6,7 @@ require_once "../entete.php";
 // ─── Filtre catégorie ───
 $categorie_id = isset($_GET['categorie']) ? (int)$_GET['categorie'] : 0;
 
-// Récupérer toutes les catégories pour les boutons
+// Récupérer toutes les catégories pour les boutons filtre
 $cats = $pdo->query("SELECT * FROM categorie ORDER BY nom ASC")->fetchAll();
 
 // ─── Pagination ───
@@ -15,7 +15,7 @@ $page   = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 if ($page < 1) $page = 1;
 $offset = ($page - 1) * $limit;
 
-// ─── Requête articles (avec ou sans filtre) ───
+// ─── Requête articles (avec ou sans filtre catégorie) ───
 if ($categorie_id > 0) {
     $countStmt = $pdo->prepare("SELECT COUNT(*) FROM article WHERE categorie_id = ?");
     $countStmt->execute([$categorie_id]);
@@ -47,16 +47,21 @@ if ($categorie_id > 0) {
 }
 
 $ouz->execute();
-$articles   = $ouz->fetchAll();
-$totalPage  = ceil($totalArticle / $limit);
+$articles  = $ouz->fetchAll();
+$totalPage = ceil($totalArticle / $limit);
 
-// Helper pour construire les liens de pagination en gardant le filtre
+// Helper pagination (garde le filtre dans l'URL)
 function paginationUrl(int $p, int $cat): string {
     $params = ['page' => $p];
     if ($cat > 0) $params['categorie'] = $cat;
     return '?' . http_build_query($params);
 }
+
+// ─── Rôle de l'utilisateur connecté ───
+$estConnecte = isset($_SESSION['user_id']);
+$role        = $estConnecte ? $_SESSION['role'] : 'visiteur';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,11 +73,34 @@ function paginationUrl(int $p, int $cat): string {
 <body>
     
 <main>
+
+    <!-- ══════════════════════════════════════════
+         BANDEAU ÉDITEUR  (visible seulement si connecté)
+    ══════════════════════════════════════════ -->
+    <?php if ($estConnecte && $role === 'editeur'): ?>
+        <div class="editeur-banner">
+            <div class="editeur-banner-inner">
+                <div class="editeur-banner-info">
+                    <span class="editeur-icon">✍️</span>
+                    <div>
+                        <strong>Espace éditeur</strong>
+                        <span>Bonjour, <?= htmlspecialchars($_SESSION['prenom'] . ' ' . $_SESSION['nom']) ?> !</span>
+                    </div>
+                </div>
+                <a href="../editeur/article.php" class="btn-editeur">
+                    📄 Voir mes articles
+                </a>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <!-- ══════════════════════════════════════════
+         TITRE + FILTRE CATÉGORIES
+    ══════════════════════════════════════════ -->
     <div class="page-heading">
         <h1>📰 Récents Articles</h1>
     </div>
 
-    <!-- ─── FILTRE CATÉGORIES ─── -->
     <div class="filter-bar">
         <a href="accueil.php"
            class="filter-btn <?= $categorie_id === 0 ? 'active' : '' ?>">
@@ -86,7 +114,9 @@ function paginationUrl(int $p, int $cat): string {
         <?php endforeach; ?>
     </div>
 
-    <!-- ─── ARTICLES ─── -->
+    <!-- ══════════════════════════════════════════
+         LISTE DES ARTICLES
+    ══════════════════════════════════════════ -->
     <?php if (empty($articles)): ?>
         <div class="empty-state">
             <p>Aucun article dans cette catégorie pour le moment.</p>
@@ -112,7 +142,7 @@ function paginationUrl(int $p, int $cat): string {
             <?php endforeach; ?>
         </div>
 
-        <!-- ─── PAGINATION ─── -->
+        <!-- PAGINATION -->
         <?php if ($totalPage > 1): ?>
             <div class="pagination">
                 <?php if ($page > 1): ?>
