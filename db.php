@@ -1,14 +1,19 @@
 <?php
 
-    $host = "localhost";
-    $dbname = "li_xew";
-    $user = "root";
-    $password = "";
+$host = "localhost";
+$dbname = "liXew";
+$user = "root";
+$password = "";
 
-    try {
-        $pdo = new PDO(
-            "mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password
-        );
-    }catch(PDOException $e){
-        echo ("erreur");
-    }
+try {
+    $pdo = new PDO(
+        "mysql:host=$host;dbname=$dbname;charset=utf8",
+        $user,
+        $password
+    );
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+}catch(PDOException $e){
+    die("Erreur connexion : " . $e->getMessage());
+}

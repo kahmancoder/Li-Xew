@@ -81,5 +81,5 @@
         session_start();
 
         $_SESSION['id'] = $user['id'];
-        echo "connexion reussie";
+        header("location: ../acceuil/acceuil.php");
     }

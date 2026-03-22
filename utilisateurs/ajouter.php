@@ -4,10 +4,10 @@ $page_title = "Ajouter un utilisateur";
 require_once '../entete.php';
 require_once '../menu.php';
 require_once '../db.php';
-require_once '../style.css';
+// require_once '../style.css';
 // Protection : admin uniquement
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../connexion.php');
+    header('Location: ../authentification/connexion.php');
     exit;
 }
 
