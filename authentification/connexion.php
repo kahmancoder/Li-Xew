@@ -81,5 +81,5 @@
         session_start();
 
         $_SESSION['id'] = $user['id'];
-        header("location: ../acceuil/acceuil.php");
+        header("location: ../acceuil/acceuil.php")
     }

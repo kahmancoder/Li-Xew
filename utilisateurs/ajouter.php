@@ -6,7 +6,7 @@ require_once '../menu.php';
 require_once '../db.php';
 // require_once '../style.css';
 // Protection : admin uniquement
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
     header('Location: ../authentification/connexion.php');
     exit;
 }
