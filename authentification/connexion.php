@@ -80,6 +80,7 @@ if (!isset($_POST['login'])) {
     // ── Connexion réussie → remplir la session ──
     session_regenerate_id(true); // Sécurité : évite la fixation de session
 
+<<<<<<< HEAD
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['login']   = $user['login'];
     $_SESSION['prenom']  = $user['prenom'];
@@ -94,3 +95,8 @@ if (!isset($_POST['login'])) {
     }
     exit;
 }
+=======
+        $_SESSION['id'] = $user['id'];
+        header("location: ../acceuil/acceuil.php")
+    }
+>>>>>>> dc5b61e1337044d118c66bac2ed3a5c1e6692fc1
