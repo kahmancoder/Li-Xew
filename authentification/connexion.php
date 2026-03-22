@@ -1,7 +1,13 @@
 <?php
-    require_once "../db.php";
+require_once "../db.php"; // session_start() est déjà dans db.php
 
-    function formulaire($a, $c){ ?>
+// Si déjà connecté → rediriger directement
+if (isset($_SESSION['user_id'])) {
+    header("Location: ../acceuil/acceuil.php");
+    exit;
+}
+
+function formulaire($a, $c){ ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,75 +17,86 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="journal-header">
         <div class="journal-title">Le Journal</div>
         <div class="journal-ornament">— ◆ —</div>
     </div>
-
     <div class="form-card">
         <p class="form-title">Connexion</p>
         <p class="form-subtitle">Accédez à votre espace personnel</p>
-
         <?php if($c): ?>
-            <div class="alert-danger"><?php echo $c; ?></div>
+            <div class="alert-danger"><?php echo htmlspecialchars($c); ?></div>
         <?php endif; ?>
-
         <form method="post" action="connexion.php">
-
             <div class="form-group">
                 <label for="login">Login</label>
                 <input type="text" id="login" name="login"
                     placeholder="Veuillez saisir votre login"
                     value="<?php echo htmlspecialchars($a); ?>" required>
             </div>
-
             <div class="form-group">
                 <label for="mdp">Mot de passe</label>
                 <input type="password" id="mdp" name="mdp"
                     placeholder="Veuillez saisir votre mot de passe" required>
             </div>
-
             <button type="submit" class="btn-primary">Se connecter</button>
-
         </form>
     </div>
-
     <div class="journal-footer">
         Pas encore de compte ? <a href="inscription.php">S'inscrire</a>
     </div>
-
 </body>
 </html>
-    <?php }
+<?php }
 
-    if (!isset($_POST["login"])){
-        formulaire("", "");
-    }else{
+// ── Traitement du formulaire ──
+if (!isset($_POST['login'])) {
+    // Pas de soumission → afficher le formulaire (rôle visiteur par défaut)
+    formulaire("", "");
 
-        $login = $_POST['login'];
-        $mot_de_passe = $_POST['mdp'];
+} else {
+    $login        = trim($_POST['login']  ?? '');
+    $mot_de_passe = trim($_POST['mdp']    ?? '');
 
-        if(!$login){
-            exit("Le champs login est requis");
-        }
-        if(!$mot_de_passe){
-            exit("Le champs mot de passe est requis");
-        }
-        
-        $sql = "SELECT * FROM utilisateur WHERE login = ?";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$login]);
+    if (!$login) {
+        formulaire("", "Le champ login est requis.");
+        exit;
+    }
+    if (!$mot_de_passe) {
+        formulaire($login, "Le champ mot de passe est requis.");
+        exit;
+    }
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Vérifier l'utilisateur en base
+    $stmt = $pdo->prepare("SELECT * FROM utilisateur WHERE login = ?");
+    $stmt->execute([$login]);
+    $user = $stmt->fetch();
 
-        if(!$user || !password_verify($mot_de_passe, $user['password'])){
-            formulaire("$login", "informations incorrectes ");
-            exit;
-        }
+    if (!$user || !password_verify($mot_de_passe, $user['password'])) {
+        formulaire($login, "Login ou mot de passe incorrect.");
+        exit;
+    }
 
-        session_start();
+    // ── Connexion réussie → remplir la session ──
+    session_regenerate_id(true); // Sécurité : évite la fixation de session
 
+<<<<<<< HEAD
+    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['login']   = $user['login'];
+    $_SESSION['prenom']  = $user['prenom'];
+    $_SESSION['nom']     = $user['nom'];
+    $_SESSION['role']    = $user['role']; // 'editeur' ou 'administrateur'
+
+    // ── Redirection selon le rôle ──
+    if ($user['role'] === 'editeur' || $user['role'] === 'administrateur') {
+        header("Location: ../acceuil/acceuil.php"); // accueil avec bandeau éditeur
+    } else {
+        header("Location: ../acceuil/acceuil.php"); // accueil visiteur normal
+    }
+    exit;
+}
+=======
         $_SESSION['id'] = $user['id'];
         header("location: ../acceuil/acceuil.php");
     }
+>>>>>>> dc5b61e1337044d118c66bac2ed3a5c1e6692fc1
