@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once "db.php";
+    require_once "../db.php";
     function formulaire($a, $b){?>
         <form method = "post" action = "ajouterCategorie.php">
                 <label> Nom de la categorie</label>

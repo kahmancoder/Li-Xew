@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once "db.php";
+    require_once "../db.php";
     function formulaire($a, $b, $c, $d){?>
         <form method = "post" action = "modifierCategorie.php">
                 <label> Ancien nom de la categorie</label>
