@@ -2,18 +2,30 @@
     require_once "db.php";
 
     function formulaire($a, $c){ ?>
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Document</title>
+                <link rel="stylesheet" href="style.css">
+            </head>
+            <body>
+                
             <form method = "post" action = "connexion.php">
                 <label > login</label>
                 <input type="text" placeholder="veuillez saisir votre login" name="login" value= "<?php echo $a ?>" required>
         <br>
                 <label > Mot de passe</label>
-                <input type="password" placeholder="veuillez saisir votre mot de passe" name="mdp" name="mdp" required>
+                <input type="password" placeholder="veuillez saisir votre mot de passe" name="mdp" required>
                 
                 <?php echo "<p style= 'color: red'>$c </p>"; ?>
 
                 <button type= "submit">Se connecter </button>
 
             </form>
+            </body>
+            </html>
     <?php }
 
     if (!isset($_POST["login"])){
