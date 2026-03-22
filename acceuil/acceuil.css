@@ -1,0 +1,319 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ─── Variables ─── */
+:root {
+  --ink:          #1a1a1a;
+  --ink-muted:    #5a5a5a;
+  --ink-faint:    #9a9a9a;
+  --paper:        #fafaf8;
+  --paper-off:    #f2f1ed;
+  --paper-card:   #ffffff;
+  --rule:         #d8d6d0;
+  --rule-light:   #ebebea;
+  --accent:       #222222;
+  --accent-warm:  #b5843a;
+  --shadow-sm:    0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.05);
+  --shadow-hover: 0 8px 28px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.07);
+  --radius:       4px;
+  --radius-lg:    8px;
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ─── Navbar ─── */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: var(--paper-card);
+  border-bottom: 1px solid var(--rule-light);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: .04em;
+  position: relative;
+  padding-bottom: 0.3rem;
+}
+
+.navbar h1::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: var(--accent-warm);
+  border-radius: 2px;
+  margin-top: 0.3rem;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-links span {
+  font-size: .88rem;
+  color: var(--ink-muted);
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ─── Bouton Se connecter ─── */
+.btn-connexion {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .5rem 1.2rem;
+  background: var(--accent-warm);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .85rem;
+  font-weight: 500;
+  border-radius: var(--radius);
+  border: 1px solid var(--accent-warm);
+  transition: background .2s, transform .15s, box-shadow .2s;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-connexion:hover {
+  background: #9e7230;
+  border-color: #9e7230;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* ─── Bouton Déconnexion ─── */
+.btn-deconnexion {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .5rem 1.2rem;
+  background: transparent;
+  color: #c0392b;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .85rem;
+  font-weight: 500;
+  border-radius: var(--radius);
+  border: 1px solid #c0392b55;
+  transition: background .2s, color .2s, border-color .2s, transform .15s;
+}
+
+.btn-deconnexion:hover {
+  background: #c0392b;
+  color: #fff;
+  border-color: #c0392b;
+  transform: translateY(-1px);
+}
+
+/* ─── Grille des articles ─── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+/* ─── Card ─── */
+.card {
+  background: var(--paper-card);
+  border: 1px solid var(--rule-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform .25s ease, box-shadow .25s ease;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Première card = hero (prend 2 colonnes) */
+.card:first-child {
+  grid-column: span 2;
+}
+
+/* ─── Image ─── */
+.card img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(15%);
+  transition: filter .4s ease;
+}
+
+.card:first-child img {
+  aspect-ratio: 21/9;
+}
+
+.card:hover img {
+  filter: grayscale(0%);
+}
+
+/* ─── Contenu texte ─── */
+.card-content {
+  padding: 1.1rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border-top: 3px solid transparent;
+  transition: border-color .25s;
+}
+
+.card:hover .card-content {
+  border-top-color: var(--accent-warm);
+}
+
+/* Titre de l'article */
+.card-content h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: .55rem;
+}
+
+.card:first-child .card-content h2 {
+  font-size: 1.55rem;
+}
+
+.card-content h2 a {
+  color: var(--ink);
+  transition: color .2s;
+}
+
+.card-content h2 a:hover {
+  color: var(--accent-warm);
+}
+
+/* Description courte */
+.card-content p {
+  font-family: 'Source Serif 4', serif;
+  font-size: .88rem;
+  color: var(--ink-muted);
+  line-height: 1.65;
+  flex: 1;
+  margin-bottom: .9rem;
+  display: -webkit-box;
+  /* -webkit-line-clamp: 3; */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Métadonnées */
+.card-content small {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--rule-light);
+  padding-top: .7rem;
+  margin-top: auto;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ─── Pagination ─── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  padding: 1.5rem 2rem 3rem;
+  border-top: 1px solid var(--rule-light);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pagination a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius);
+  border: 1px solid var(--rule);
+  background: var(--paper-card);
+  font-size: 1.1rem;
+  color: var(--ink-muted);
+  box-shadow: var(--shadow-sm);
+  transition: background .2s, border-color .2s, transform .15s;
+}
+
+.pagination a:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  transform: scale(1.08);
+}
+
+.pagination span {
+  font-family: 'Playfair Display', serif;
+  font-size: .9rem;
+  color: var(--ink-muted);
+  letter-spacing: .04em;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .card:first-child {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: .8rem 1rem;
+  }
+  .navbar h1 {
+    font-size: 1.1rem;
+  }
+  .btn-connexion,
+  .btn-deconnexion {
+    padding: .4rem .8rem;
+    font-size: .78rem;
+  }
+  .nav-links span {
+    display: none; /* cache le "Bonjour, Prénom" sur mobile */
+  }
+  .container {
+    grid-template-columns: 1fr;
+    padding: .5rem 1rem 2rem;
+  }
+  .card:first-child {
+    grid-column: span 1;
+  }
+  .pagination {
+    gap: .7rem;
+    padding: 1rem 1rem 2rem;
+  }
+}

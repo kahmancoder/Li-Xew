@@ -1,0 +1,293 @@
+/* ============================================
+   connexion_journal.css
+   Page de connexion — style "Le Journal"
+   Fond sombre, typographie serif, accents dorés
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+
+/* ── VARIABLES ─────────────────────────── */
+:root {
+  --gold:        #c9a84c;
+  --gold-light:  #e2c97e;
+  --gold-dim:    #c9a84c30;
+  --dark-bg:     #111008;
+  --dark-card:   #1a180f;
+  --dark-border: #2e2a1a;
+  --text-main:   #e8e0cc;
+  --text-muted:  #8a8070;
+  --red-error:   #c0392b;
+  --red-bg:      #1f0a08;
+}
+
+/* ── RESET & BASE ──────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--dark-bg);
+  color: var(--text-main);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  /* texture grain subtile */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* ── EN-TÊTE JOURNAL ───────────────────── */
+.journal-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.journal-header h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: var(--text-main);
+  line-height: 1.1;
+
+  /* effet dorure sur le texte */
+  background: linear-gradient(135deg, #e8d9a0, #c9a84c 40%, #f5e6b0 60%, #b8892a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Séparateur ornemental ◆ */
+.journal-header .ornament {
+  display: block;
+  text-align: center;
+  color: var(--gold);
+  font-size: 14px;
+  letter-spacing: 10px;
+  margin-top: 10px;
+  opacity: 0.8;
+}
+
+.journal-header .ornament::before,
+.journal-header .ornament::after {
+  content: '——';
+  letter-spacing: -2px;
+  opacity: 0.5;
+}
+
+/* ── CARTE FORMULAIRE ──────────────────── */
+.form-card {
+  background-color: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-top: 2px solid var(--gold);
+  border-radius: 2px;
+  padding: 42px 48px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow:
+    0 0 0 1px #ffffff06,
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    0 2px 0 var(--gold) inset;
+
+  /* animation d'apparition */
+  animation: fadeUp 0.5s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── TITRE INTÉRIEUR ───────────────────── */
+.form-card .form-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+
+.form-card .form-subtitle {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 28px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+/* ── GROUPES CHAMP ─────────────────────── */
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 8px;
+  font-family: 'EB Garamond', serif;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: #0d0c07;
+  border: 1px solid var(--dark-border);
+  border-radius: 1px;
+  color: var(--text-main);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 1rem;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  outline: none;
+}
+
+.form-group input::placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.92rem;
+}
+
+.form-group input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-dim);
+  background-color: #11100a;
+}
+
+/* ── ALERTE ERREUR ─────────────────────── */
+.alert-danger {
+  background-color: var(--red-bg);
+  border: 1px solid #5a1a14;
+  border-left: 3px solid var(--red-error);
+  color: #e8a09a;
+  font-size: 0.88rem;
+  font-style: italic;
+  padding: 10px 14px;
+  border-radius: 1px;
+  margin-bottom: 22px;
+}
+
+/* ── BOUTON PRINCIPAL ──────────────────── */
+.btn-primary {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 13px 20px;
+  background: linear-gradient(135deg, #b8892a, #e2c97e 50%, #b8892a);
+  background-size: 200% auto;
+  color: #0d0c07;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 1px;
+  cursor: pointer;
+  transition: background-position 0.4s, box-shadow 0.3s;
+  box-shadow: 0 2px 12px rgba(201, 168, 76, 0.2);
+}
+
+.btn-primary:hover {
+  background-position: right center;
+  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+/* ── PIED DE PAGE ──────────────────────── */
+.journal-footer {
+  margin-top: 28px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+.journal-footer a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.journal-footer a:hover {
+  text-decoration: underline;
+}
+/* ── SELECT ────────────────────────────── */
+.form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: #0d0c07;
+  border: 1px solid var(--dark-border);
+  border-radius: 1px;
+  color: var(--text-main);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.form-group select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-dim);
+}
+
+.form-group select option {
+  background-color: var(--dark-card);
+  color: var(--text-main);
+}
+
+/* ── FORM-CARD LARGE (inscription) ──────── */
+.form-card.wide {
+  max-width: 500px;
+}
+/* ── HEADER JOURNAL ─────────────────────── */
+.journal-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #e8d9a0, #c9a84c 40%, #f5e6b0 60%, #b8892a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.journal-ornament {
+  color: #c9a84c;
+  font-size: 13px;
+  letter-spacing: 8px;
+  margin-top: 8px;
+  opacity: 0.8;
+  text-align: center;
+}
+
+.journal-header {
+  margin-bottom: 36px;
+}
+/* ── RESPONSIVE ────────────────────────── */
+@media (max-width: 520px) {
+  .form-card {
+    padding: 28px 24px;
+    margin: 0 16px;
+  }
+
+  .journal-header h1 {
+    font-size: 2rem;
+  }
+}
