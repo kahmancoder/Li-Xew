@@ -38,9 +38,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     <?php echo htmlspecialchars($_SESSION['prenom'] . ' ' . $_SESSION['nom']); ?>
                     — <?php echo ucfirst(htmlspecialchars($_SESSION['role'])); ?>
                 </span>
-                <a href="../deconnexion.php" class="btn btn-logout">Déconnexion</a>
+                <a href="../authentification/deconnexion.php" class="btn btn-logout">Déconnexion</a>
             <?php else: ?>
-                <a href="../connexion.php" class="btn btn-login">Connexion</a>
+                <a href="../authentification/connexion.php" class="btn btn-login">Connexion</a>
             <?php endif; ?>
         </div>
 
