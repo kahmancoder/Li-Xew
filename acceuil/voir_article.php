@@ -1,5 +1,5 @@
 <?php
-require_once 'db.php';
+require_once '../db.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header('Location: accueil.php');

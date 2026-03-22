@@ -11,7 +11,7 @@
                 &nbsp;|&nbsp;
                 Département Génie Informatique
                 &nbsp;|&nbsp;
-                <a href="/accueil.php" style="color:#a8a4ff;">Accueil</a>
+                <a href="../acceuil/acceuil.php" style="color:#a8a4ff;">Accueil</a>
             </p>
         </div>
     </footer>
