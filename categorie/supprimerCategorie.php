@@ -12,10 +12,8 @@
 
     $role = $stmt->fetchColumn();
 
-    if ($role == "visiteur"){
-        echo "Veuillez creer un compte editeur";
-        header("location: connexion.php");
-        exit;
+    if ($role !== "admin"){
+        die ("Seul l'admin peut supprimer une categorie");
     }
     if (!isset($_GET['nom'])){
         die ("Pas de parametre");

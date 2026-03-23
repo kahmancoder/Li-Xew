@@ -69,18 +69,7 @@
         exit;
     }
 
-    $sql = "SELECT role FROM utilisateur where id = ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$_SESSION['id']]);
-
-    $role = $stmt->fetchColumn();
-
-    if ($role == "visiteur"){
-        echo "Veuillez creer un compte editeur";
-        header("location: connexion.php");
-        exit;
-    }
-
+    
     if (!isset($_POST['nom'])){
         formulaire("","");
     }else{

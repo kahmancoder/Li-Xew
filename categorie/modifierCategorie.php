@@ -87,9 +87,8 @@
 
     $role = $stmt->fetchColumn();
 
-    if ($role === "visiteur"){
-        echo "<script>alert('Veuillez créer un compte éditeur'); window.location='../authentification/connexion.php';</script>";
-        exit;
+    if ($role !== "admin"){
+        die("Seul l'admin peut modifier");
     }
 
     if (!isset($_POST['nom'])){
