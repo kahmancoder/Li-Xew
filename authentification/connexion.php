@@ -77,22 +77,13 @@ if (!isset($_POST['login'])) {
         exit;
     }
 
-    // ── Connexion réussie → remplir la session ──
-    session_regenerate_id(true); // Sécurité : évite la fixation de session
+// ── Connexion réussie → remplir la session ──
+session_start(true); // Sécurité
 
-    $_SESSION['user_id'] = $user['id'];
-    $_SESSION['login']   = $user['login'];
-    $_SESSION['prenom']  = $user['prenom'];
-    $_SESSION['nom']     = $user['nom'];
-    $_SESSION['role']    = $user['role']; // 'editeur' ou 'administrateur'
+$_SESSION['id'] = $user['id'];
+$_SESSION['role']    = $user['role'];
 
-    // ── Redirection selon le rôle ──
-    if ($user['role'] === 'editeur' || $user['role'] === 'administrateur') {
-        header("Location: ../acceuil/acceuil.php"); // accueil avec bandeau éditeur
-    } else {
-        header("Location: ../acceuil/acceuil.php"); // accueil visiteur normal
-    }
-    exit;
+// Redirection
+header("Location: ../acceuil/acceuil.php");
+exit;
 }
-
- 
