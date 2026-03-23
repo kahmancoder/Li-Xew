@@ -8,92 +8,113 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription — Le Journal</title>
     <link rel="stylesheet" href="style.css">
- 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-    <div style="text-align:center; margin-bottom: 36px;">
-        <div style="
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: clamp(2.4rem, 6vw, 3.6rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, #e8d9a0, #c9a84c 40%, #f5e6b0 60%, #b8892a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.1;
-        ">Le Journal</div>
-        <div style="color:#c9a84c; font-size:13px; letter-spacing:8px; margin-top:8px; opacity:0.8;">— ◆ —</div>
-    </div>
-
-    <div class="form-card">
-        <p class="form-title">Inscription</p>
-        <p class="form-subtitle">Créez votre compte pour accéder à l'espace rédaction</p>
-
-        <form method="post" action="inscription.php">
-
-            <div class="form-group">
-                <label for="nom">Nom</label>
-                <input type="text" id="nom" name="nom"
-                    placeholder="Veuillez saisir votre nom"
-                    value="<?php echo htmlspecialchars($nom); ?>" required>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-logo">
+                <a href="../index.php">
+                    <span class="logo-icon">📰</span>
+                    <span class="logo-text">Le Journal</span>
+                </a>
             </div>
+            <p class="header-slogan">L'actualité en temps réel</p>
+        </div>
+    </header>
 
-            <div class="form-group">
-                <label for="prenom">Prénom</label>
-                <input type="text" id="prenom" name="prenom"
-                    placeholder="Veuillez saisir votre prénom"
-                    value="<?php echo htmlspecialchars($prenom); ?>" required>
-            </div>
+    <main>
 
-            <div class="form-group">
-                <label for="login">Login</label>
-                <input type="text" id="login" name="login"
-                    placeholder="Veuillez saisir votre login"
-                    value="<?php echo htmlspecialchars($login); ?>" required>
-                <?php if($loginerror): ?>
-                    <div class="alert-danger" style="margin-top:8px; margin-bottom:0;"><?php echo $loginerror; ?></div>
-                <?php endif; ?>
-            </div>
+        <div class="page-heading">
+            <h1>Inscription</h1>
+        </div>
 
-            <div class="form-group">
-                <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password"
-                    placeholder="Veuillez saisir votre mot de passe" required>
-                <?php if($passworderror): ?>
-                    <div class="alert-danger" style="margin-top:8px; margin-bottom:0;"><?php echo $passworderror; ?></div>
-                <?php endif; ?>
-            </div>
+        <div class="form-wrap centered">
 
-            <div class="form-group">
-                <label for="confirmer_mdp">Confirmer le mot de passe</label>
-                <input type="password" id="confirmer_mdp" name="confirmer_mdp"
-                    placeholder="Confirmez votre mot de passe" required>
-                <?php if($confirmerror): ?>
-                    <div class="alert-danger" style="margin-top:8px; margin-bottom:0;"><?php echo $confirmerror; ?></div>
-                <?php endif; ?>
-            </div>
+            <form method="post" action="inscription.php">
 
-            <div class="form-group">
-                <label for="role">Rôle</label>
-                <select id="role" name="role">
-                    <option value="visiteur">Visiteur</option>
-                    <option value="editeur">Éditeur</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="nom">Nom <span class="requis">*</span></label>
+                    <input type="text" id="nom" name="nom"
+                        placeholder="Veuillez saisir votre nom"
+                        value="<?php echo htmlspecialchars($nom); ?>" required>
+                </div>
 
-            <button type="submit" class="btn-primary">S'inscrire</button>
+                <div class="form-group">
+                    <label for="prenom">Prénom <span class="requis">*</span></label>
+                    <input type="text" id="prenom" name="prenom"
+                        placeholder="Veuillez saisir votre prénom"
+                        value="<?php echo htmlspecialchars($prenom); ?>" required>
+                </div>
 
-        </form>
-    </div>
+                <div class="form-group">
+                    <label for="login">Login <span class="requis">*</span></label>
+                    <input type="text" id="login" name="login"
+                        placeholder="Veuillez saisir votre login"
+                        value="<?php echo htmlspecialchars($login); ?>" required>
+                    <?php if($loginerror): ?>
+                        <div class="flash flash-erreur" style="margin-top:8px;">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <?php echo $loginerror; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
 
-    <div class="journal-footer">
-        Déjà inscrit ? <a href="connexion.php">Se connecter</a>
-    </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe <span class="requis">*</span></label>
+                    <input type="password" id="password" name="password"
+                        placeholder="Veuillez saisir votre mot de passe" required>
+                    <?php if($passworderror): ?>
+                        <div class="flash flash-erreur" style="margin-top:8px;">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <?php echo $passworderror; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmer_mdp">Confirmer le mot de passe <span class="requis">*</span></label>
+                    <input type="password" id="confirmer_mdp" name="confirmer_mdp"
+                        placeholder="Confirmez votre mot de passe" required>
+                    <?php if($confirmerror): ?>
+                        <div class="flash flash-erreur" style="margin-top:8px;">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <?php echo $confirmerror; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Rôle <span class="requis">*</span></label>
+                    <select id="role" name="role">
+                        <option value="visiteur">Visiteur</option>
+                        <option value="editeur">Éditeur</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-editeur">
+                        <i class="fa-solid fa-user-plus"></i> S'inscrire
+                    </button>
+                    <a href="connexion.php" class="btn-retour">
+                        Déjà inscrit ? Se connecter
+                    </a>
+                </div>
+
+            </form>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        &copy; <?php echo date('Y'); ?> Le Journal — <a href="../acceuil/acceuil.php">Accueil</a>
+    </footer>
 
 </body>
 </html>
     <?php }
+
     if (!isset($_POST['nom'])){
         formulaire("","","", "", "", "");
     }else{
@@ -123,15 +144,13 @@
                     exit("Champs role manquant");
                 }
 
-
-                $sql = "SELECT id FROM utilisateur WHERE login = ? ";
+                $sql = "SELECT id FROM utilisateur WHERE login = ?";
                 $stmt = $pdo->prepare($sql);
-                
                 $stmt->execute([$login]);
 
                 if ($stmt->rowCount() > 0){
-                        formulaire("$nom","$prenom", "$login", "Ce login est deja utilise","","");
-                        exit;
+                    formulaire("$nom","$prenom", "$login", "Ce login est deja utilise","","");
+                    exit;
                 }
 
                 if(strlen($mot_de_passe) < 6){

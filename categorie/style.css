@@ -1,0 +1,249 @@
+/* ============================================
+   categorie_journal.css
+   Page liste catégories — style "Le Journal"
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+
+/* ── VARIABLES ─────────────────────────── */
+:root {
+  --gold:        #c9a84c;
+  --gold-light:  #e2c97e;
+  --gold-dim:    #c9a84c30;
+  --dark-bg:     #111008;
+  --dark-card:   #1a180f;
+  --dark-border: #2e2a1a;
+  --text-main:   #e8e0cc;
+  --text-muted:  #8a8070;
+  --red-error:   #c0392b;
+  --red-bg:      #1f0a08;
+}
+
+/* ── RESET & BASE ──────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--dark-bg);
+  color: var(--text-main);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+/* ── HEADER JOURNAL ─────────────────────── */
+.journal-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.journal-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #e8d9a0, #c9a84c 40%, #f5e6b0 60%, #b8892a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+
+.journal-ornament {
+  color: var(--gold);
+  font-size: 13px;
+  letter-spacing: 8px;
+  margin-top: 8px;
+  opacity: 0.8;
+}
+
+/* ── CONTENU PRINCIPAL ─────────────────── */
+.page-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.page-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* ── BOUTON ────────────────────────────── */
+.btn-primary {
+  display: inline-block;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, #b8892a, #e2c97e 50%, #b8892a);
+  background-size: 200% auto;
+  color: #0d0c07;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 1px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-position 0.4s, box-shadow 0.3s;
+  box-shadow: 0 2px 12px rgba(201, 168, 76, 0.2);
+}
+
+.btn-primary:hover {
+  background-position: right center;
+  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.4);
+  text-decoration: none;
+}
+
+/* ── TABLEAU ───────────────────────────── */
+.table-card {
+  background-color: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-top: 2px solid var(--gold);
+  border-radius: 2px;
+  overflow: hidden;
+  animation: fadeUp 0.5s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+thead tr {
+  background-color: #0d0c07;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+thead th {
+  padding: 14px 20px;
+  text-align: left;
+  font-family: 'EB Garamond', serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--dark-border);
+  transition: background-color 0.2s;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background-color: #1f1d10;
+}
+
+tbody td {
+  padding: 13px 20px;
+  color: var(--text-main);
+  vertical-align: middle;
+}
+
+/* ── LIENS D'ACTION ────────────────────── */
+.action-modifier {
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 0.88rem;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+
+.action-modifier:hover {
+  color: var(--gold-light);
+  text-decoration: underline;
+}
+
+.action-supprimer {
+  color: #e8a09a;
+  text-decoration: none;
+  font-size: 0.88rem;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+
+.action-supprimer:hover {
+  color: #f5c0ba;
+  text-decoration: underline;
+}
+
+/* ── PIED DE PAGE ──────────────────────── */
+.journal-footer {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ── BOUTON SECONDAIRE ─────────────────── */
+.btn-secondary {
+  display: inline-block;
+  padding: 10px 22px;
+  background: transparent;
+  border: 1px solid var(--dark-border);
+  color: var(--text-muted);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 1px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  text-decoration: none;
+}
+
+/* ── ALERTE ERREUR ─────────────────────── */
+.alert-danger {
+  background-color: var(--red-bg);
+  border: 1px solid #5a1a14;
+  border-left: 3px solid var(--red-error);
+  color: #e8a09a;
+  font-size: 0.88rem;
+  font-style: italic;
+  padding: 10px 14px;
+  border-radius: 1px;
+  margin-bottom: 22px;
+}
+
+/* ── FORM INSIDE TABLE-CARD ────────────── */
+.form-subtitle {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 28px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--dark-border);
+}
