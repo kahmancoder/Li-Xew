@@ -78,7 +78,7 @@ if (!isset($_POST['login'])) {
     }
 
 // ── Connexion réussie → remplir la session ──
-session_start(true); // Sécurité
+session_start(); // Sécurité
 
 $_SESSION['id'] = $user['id'];
 $_SESSION['role']    = $user['role'];
