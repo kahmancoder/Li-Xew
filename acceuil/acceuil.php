@@ -90,6 +90,9 @@ $role        = $estConnecte ? $_SESSION['role'] : 'visiteur';
                 <a href="../editeur/article.php" class="btn-editeur">
                     📄 Voir mes articles
                 </a>
+                <a href="../editeur/article.php" class="btn-editeur">
+                    📄 Categorie
+                </a>
             </div>
         </div>
     <?php endif; ?>
