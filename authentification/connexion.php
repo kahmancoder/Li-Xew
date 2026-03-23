@@ -81,6 +81,8 @@ if (!isset($_POST['login'])) {
 session_start(); // Sécurité
 
 $_SESSION['id'] = $user['id'];
+$_SESSION['prenom']= $user['prenom'];
+$_SESSION['nom']= $user['nom'];
 $_SESSION['role']    = $user['role'];
 
 // Redirection

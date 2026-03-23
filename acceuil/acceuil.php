@@ -58,7 +58,7 @@ function paginationUrl(int $p, int $cat): string {
 }
 
 // ─── Rôle de l'utilisateur connecté ───
-$estConnecte = isset($_SESSION['user_id']);
+$estConnecte = isset($_SESSION['id']);
 $role        = $estConnecte ? $_SESSION['role'] : 'visiteur';
 ?>
 
@@ -77,7 +77,7 @@ $role        = $estConnecte ? $_SESSION['role'] : 'visiteur';
     <!-- ══════════════════════════════════════════
          BANDEAU ÉDITEUR  (visible seulement si connecté)
     ══════════════════════════════════════════ -->
-    <?php if ($estConnecte && $role === 'editeur'): ?>
+    <?php if ($estConnecte && (($role === 'editeur') || ($role === 'admin'))): ?>
         <div class="editeur-banner">
             <div class="editeur-banner-inner">
                 <div class="editeur-banner-info">
