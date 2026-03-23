@@ -105,7 +105,7 @@ $role        = $estConnecte ? $_SESSION['role'] : 'visiteur';
     </div>
 
     <div class="filter-bar">
-        <a href="accueil.php"
+        <a href="acceuil.php"
            class="filter-btn <?= $categorie_id === 0 ? 'active' : '' ?>">
             Tous
         </a>
@@ -128,7 +128,7 @@ $role        = $estConnecte ? $_SESSION['role'] : 'visiteur';
         <div class="container">
             <?php foreach ($articles as $article): ?>
                 <div class="card">
-                    <img src="images/<?= htmlspecialchars($article['image']) ?>" alt="image">
+                    <img src="../images/<?= htmlspecialchars($article['image']) ?>" alt="image">
                     <div class="card-content">
                         <h2>
                             <a href="articles/voir.php?id=<?= $article['id'] ?>">

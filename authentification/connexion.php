@@ -77,10 +77,13 @@ if (!isset($_POST['login'])) {
         exit;
     }
 
-    // ── Connexion réussie → remplir la session ──
-        session_start();
-        $_SESSION['id'] = $user['id'];
-        $_SESSION['role'] = $user['role'];
-        header("location: ../acceuil/acceuil.php");
-    }
+// ── Connexion réussie → remplir la session ──
+session_start(true); // Sécurité
 
+$_SESSION['id'] = $user['id'];
+$_SESSION['role']    = $user['role'];
+
+// Redirection
+header("Location: ../acceuil/acceuil.php");
+exit;
+}
