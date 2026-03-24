@@ -1,15 +1,16 @@
 <?php
+session_start();
 $page_title = "Mes articles";
 require_once "../db.php";
 require_once "../entete.php";
 
 // ─── Accès réservé aux éditeurs ───
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'editeur') {
-    header("Location: ../connexion.php");
+if (!isset($_SESSION['id']) || ($_SESSION['role'] !== 'editeur' && $_SESSION['role'] !== 'admin')) {
+    header("Location: ../authentification/connexion.php");
     exit;
 }
 
-$editeur_id = $_SESSION['user_id'];
+$editeur_id = $_SESSION['id'];
 $action     = $_GET['action'] ?? 'liste';
 $id_edit    = (int)($_GET['id'] ?? 0);
 $erreurs    = [];
