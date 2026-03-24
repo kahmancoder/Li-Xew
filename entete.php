@@ -22,13 +22,13 @@ if (session_status() === PHP_SESSION_NONE) {
         <!-- Logo / Nom du site -->
         <div class="header-logo">
             <a href="/accueil.php">
-                <span class="logo-text">ActuSite</span>
+                <span class="logo-text">Li Xew</span>
             </a>
         </div>
 
         <!-- Slogan -->
         <div class="header-slogan">
-            L'actualité en temps réel
+           <h1> L'actualité en temps réel</h1>
         </div>
 
         <!-- Infos utilisateur connecté -->
