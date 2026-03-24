@@ -22,7 +22,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <!-- Logo / Nom du site -->
         <div class="header-logo">
             <a href="/accueil.php">
-                <span class="logo-text">Li Xew</span>
+                <h1><span class="logo-text">Li Xew</span></h1>
             </a>
         </div>
 
