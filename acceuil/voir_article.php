@@ -1,6 +1,5 @@
 <?php
 require_once '../db.php';
-require_once '../entete.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header('Location: /Li-Xew/acceuil/acceuil.php');
@@ -42,7 +41,6 @@ $categories = $pdo->query("SELECT id, nom FROM categorie ORDER BY nom ASC")->fet
 $page_title = $article['titre'];
 ?>
 <link rel="stylesheet" href="voir_article.css">
-<?php require_once '../menu.php'; ?>
 
 <!-- Fil d'ariane -->
 <div class="breadcrumb-bar">
