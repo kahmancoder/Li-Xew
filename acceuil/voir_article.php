@@ -49,12 +49,12 @@ $page_title = $article['titre'];
     <div class="breadcrumb-inner">
         <a href="/Li-Xew/acceuil/acceuil.php">🏠 Accueil</a>
         <span class="bc-sep">›</span>
-        <?php if ($article['categorie']): ?>
+        <?php if ($article['categorie']){  ?>
             <a href="/Li-Xew/acceuil/acceuil.php?categorie=<?= $article['categorie_id'] ?>">
                 <?= htmlspecialchars($article['categorie']) ?>
             </a>
             <span class="bc-sep">›</span>
-        <?php endif; ?>
+        <?php } ?>
         <span><?= htmlspecialchars(mb_strimwidth($article['titre'], 0, 60, '…')) ?></span>
     </div>
 </div>
@@ -66,33 +66,33 @@ $page_title = $article['titre'];
 
         <!-- Image à gauche -->
         <div class="hero-image-col">
-            <?php if (!empty($article['image'])): ?>
+            <?php if (!empty($article['image'])){  ?>
                 <img src="/Li-Xew/images/<?= htmlspecialchars($article['image']) ?>"
                      alt="<?= htmlspecialchars($article['titre']) ?>"
                      class="hero-img">
-            <?php else: ?>
+            <?php }else{  ?>
                 <div class="hero-img-placeholder">
                     <span>📰</span>
                     <p>Aucune image</p>
                 </div>
-            <?php endif; ?>
+            <?php } ?>
         </div>
 
         <!-- Infos à droite -->
         <div class="hero-info-col">
 
-            <?php if ($article['categorie']): ?>
+            <?php if ($article['categorie']){  ?>
                 <a href="/Li-Xew/acceuil/acceuil.php?categorie=<?= $article['categorie_id'] ?>"
                    class="article-badge">
                     <?= htmlspecialchars($article['categorie']) ?>
                 </a>
-            <?php endif; ?>
+            <?php } ?>
 
             <h1 class="article-title"><?= htmlspecialchars($article['titre']) ?></h1>
 
-            <?php if (!empty($article['description_courte'])): ?>
+            <?php if (!empty($article['description_courte'])){  ?>
                 <p class="article-lead"><?= htmlspecialchars($article['description_courte']) ?></p>
-            <?php endif; ?>
+            <?php } ?>
 
             <div class="article-meta">
                 <div class="meta-item">
@@ -113,12 +113,12 @@ $page_title = $article['titre'];
 
             <!-- Catégories rapides -->
             <div class="hero-cats">
-                <?php foreach ($categories as $cat): ?>
+                <?php foreach ($categories as $cat){  ?>
                     <a href="/Li-Xew/acceuil/acceuil.php?categorie=<?= $cat['id'] ?>"
                        class="cat-pill <?= ($article['categorie_id'] == $cat['id']) ? 'cat-pill--active' : '' ?>">
                         <?= htmlspecialchars($cat['nom']) ?>
                     </a>
-                <?php endforeach; ?>
+                <?php } ?>
             </div>
 
         </div>
@@ -130,13 +130,13 @@ $page_title = $article['titre'];
         <div class="article-body">
             <?php
             $paragraphes = preg_split('/\n{2,}/', trim($article['contenu_complet']));
-            foreach ($paragraphes as $p):
-                if (!empty(trim($p))):
+            foreach ($paragraphes as $p){ 
+                if (!empty(trim($p))){ 
             ?>
                 <p><?= nl2br(htmlspecialchars(trim($p))) ?></p>
             <?php
-                endif;
-            endforeach;
+                }
+            }
             ?>
         </div>
 
@@ -145,27 +145,27 @@ $page_title = $article['titre'];
     </div>
 
     <!-- ══ ARTICLES LIÉS ════════════════════════════════════════════ -->
-    <?php if (!empty($articlesLies)): ?>
+    <?php if (!empty($articlesLies)){  ?>
     <div class="related-section">
         <h2 class="related-title">Dans la même catégorie</h2>
         <div class="related-grid">
-            <?php foreach ($articlesLies as $lie): ?>
+            <?php foreach ($articlesLies as $lie){  ?>
             <a href="/Li-Xew/acceuil/voir_article.php?id=<?= $lie['id'] ?>" class="related-card">
-                <?php if (!empty($lie['image'])): ?>
+                <?php if (!empty($lie['image'])){  ?>
                     <img src="/Li-Xew/images/<?= htmlspecialchars($lie['image']) ?>"
                          alt="<?= htmlspecialchars($lie['titre']) ?>" class="related-img">
-                <?php else: ?>
+                <?php }else{  ?>
                     <div class="related-img-placeholder">📰</div>
-                <?php endif; ?>
+                <?php } ?>
                 <div class="related-info">
                     <strong><?= htmlspecialchars($lie['titre']) ?></strong>
                     <span><?= date('d M Y', strtotime($lie['date'])) ?></span>
                 </div>
             </a>
-            <?php endforeach; ?>
+            <?php }; ?>
         </div>
     </div>
-    <?php endif; ?>
+    <?php } ?>
 
 </main>
 

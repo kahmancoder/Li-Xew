@@ -1,208 +1,19 @@
 <?php
-session_start();
-$page_title = "Mes articles";
-require_once "../db.php";
-require_once "../entete.php";
+require_once '../entete.php';
+require_once '../menu.php';
+require_once '../db.php';
 
-// ─── Accès réservé aux éditeurs ───
-if (!isset($_SESSION['id']) && $_SESSION['role'] !== 'editeur' && $_SESSION['role'] !== 'admin') {
-    header("Location: ../connexion.php");
-    exit;
-}
-
-$editeur_id = $_SESSION['id'];
 $action     = $_GET['action'] ?? 'liste';
-$id_edit    = (int)($_GET['id'] ?? 0);
-$erreurs    = [];
 
-// ─── Fonction upload image ───
-function uploadImage(): ?string {
-    if (empty($_FILES['image']['name'])) return null;
-
-    $ext     = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
-    $exts_ok = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-
-    if (!in_array($ext, $exts_ok))              return 'FORMAT';
-    if ($_FILES['image']['size'] > 5*1024*1024) return 'TAILLE';
-
-    $dossier = '../images/';
-    if (!is_dir($dossier)) mkdir($dossier, 0755, true);
-
-    $nom = uniqid('img_') . '.' . $ext;
-    return move_uploaded_file($_FILES['image']['tmp_name'], $dossier . $nom) ? $nom : null;
-}
-
-// ═══════════════════════════════════════════════
-// SUPPRESSION
-// ═══════════════════════════════════════════════
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_supprimer'])) {
-    $id_sup = (int)($_POST['id'] ?? 0);
-    if ($id_sup > 0) {
-        $s = $pdo->prepare("SELECT id, image FROM article WHERE id = ? AND utilisateur_id = ?");
-        $s->execute([$id_sup, $editeur_id]);
-        $art = $s->fetch();
-        if ($art) {
-            if ($art['image'] && file_exists('../images/' . $art['image'])) {
-                unlink('../images/' . $art['image']);
-            }
-            $pdo->prepare("DELETE FROM article WHERE id = ? AND utilisateur_id = ?")
-                ->execute([$id_sup, $editeur_id]);
-            $_SESSION['flash'] = ['type' => 'succes', 'message' => 'Article supprimé avec succès.'];
-        } else {
-            $_SESSION['flash'] = ['type' => 'erreur', 'message' => 'Article introuvable ou accès refusé.'];
-        }
-    }
-    header("Location: article.php");
+if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
+    header('Location: /Li-Xew/authentification/connexion.php');
     exit;
 }
 
-// ═══════════════════════════════════════════════
-// AJOUT
-// ═══════════════════════════════════════════════
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_ajouter'])) {
-    $valeurs = [
-        'titre'              => trim($_POST['titre']              ?? ''),
-        'description_courte' => trim($_POST['description_courte'] ?? ''),
-        'contenu_complet'    => trim($_POST['contenu_complet']    ?? ''),
-        'categorie_id'       => (int)($_POST['categorie_id']      ?? 0),
-        'image'              => null,
-    ];
-
-    if (empty($valeurs['titre']))                                    
-         $erreurs['titre']              = "Le titre est obligatoire.";
-    elseif (strlen($valeurs['titre']) > 50)                           
-        $erreurs['titre']              = "50 caractères maximum.";
-    if (!empty($valeurs['description_courte']) && strlen($valeurs['description_courte']) > 300)
-        $erreurs['description_courte'] = "300 caractères maximum.";
-    if (empty($valeurs['contenu_complet']))                          
-         $erreurs['contenu_complet']    = "Le contenu est obligatoire.";
-    elseif (strlen($valeurs['contenu_complet']) < 20)                
-         $erreurs['contenu_complet']    = "20 caractères minimum.";
-    if ($valeurs['categorie_id'] <= 0)                                
-        $erreurs['categorie_id']       = "Sélectionnez une catégorie.";
-
-    // ─── Gestion photo ───
-    if (!empty($_FILES['image']['name'])) {
-        $resultat = uploadImage();
-        if ($resultat === 'FORMAT')     $erreurs['image'] = "Format non autorisé (jpg, png, gif, webp).";
-        elseif ($resultat === 'TAILLE') $erreurs['image'] = "L'image ne doit pas dépasser 5 Mo.";
-        elseif ($resultat === null)     $erreurs['image'] = "Erreur lors de l'upload.";
-        else                            $valeurs['image'] = $resultat;
-    }
-
-    if (empty($erreurs)) {
-        $pdo->prepare("
-            INSERT INTO article (titre, description_courte, contenu_complet, image, categorie_id, utilisateur_id, date)
-            VALUES (?, ?, ?, ?, ?, ?, NOW())
-        ")->execute([
-            $valeurs['titre'],
-            $valeurs['description_courte'],
-            $valeurs['contenu_complet'],
-            $valeurs['image'],
-            $valeurs['categorie_id'],
-            $editeur_id
-        ]);
-        $_SESSION['flash'] = ['type' => 'succes', 'message' => 'Article publié avec succès !'];
-        header("Location: article.php");
-        exit;
-    }
-    $action = 'ajouter';
-}
-
-// ═══════════════════════════════════════════════
-// MODIFICATION
-// ═══════════════════════════════════════════════
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_modifier'])) {
-    $id_mod  = (int)($_POST['id'] ?? 0);
-    $valeurs = [
-        'titre'              => trim($_POST['titre']              ?? ''),
-        'description_courte' => trim($_POST['description_courte'] ?? ''),
-        'contenu_complet'    => trim($_POST['contenu_complet']    ?? ''),
-        'categorie_id'       => (int)($_POST['categorie_id']      ?? 0),
-        'image'              => $_POST['image_actuelle'] ?? null,
-    ];
-
-    if (empty($valeurs['titre']))                                     $erreurs['titre']              = "Le titre est obligatoire.";
-    elseif (strlen($valeurs['titre']) > 50)                           $erreurs['titre']              = "50 caractères maximum.";
-    if (!empty($valeurs['description_courte']) && strlen($valeurs['description_courte']) > 300)
-                                                                      $erreurs['description_courte'] = "300 caractères maximum.";
-    if (empty($valeurs['contenu_complet']))                           $erreurs['contenu_complet']    = "Le contenu est obligatoire.";
-    elseif (strlen($valeurs['contenu_complet']) < 20)                 $erreurs['contenu_complet']    = "20 caractères minimum.";
-    if ($valeurs['categorie_id'] <= 0)                                $erreurs['categorie_id']       = "Sélectionnez une catégorie.";
-
-    // ─── Gestion photo (nouvelle image optionnelle) ───
-    if (!empty($_FILES['image']['name'])) {
-        $resultat = uploadImage();
-        if ($resultat === 'FORMAT')     $erreurs['image'] = "Format non autorisé (jpg, png, gif, webp).";
-        elseif ($resultat === 'TAILLE') $erreurs['image'] = "L'image ne doit pas dépasser 5 Mo.";
-        elseif ($resultat === null)     $erreurs['image'] = "Erreur lors de l'upload.";
-        else {
-            // Supprimer l'ancienne image du disque
-            if ($valeurs['image'] && file_exists('../images/' . $valeurs['image'])) {
-                unlink('../images/' . $valeurs['image']);
-            }
-            $valeurs['image'] = $resultat;
-        }
-    }
-
-    if (empty($erreurs)) {
-        $pdo->prepare("
-            UPDATE article
-            SET titre = ?, description_courte = ?, contenu_complet = ?, image = ?, categorie_id = ?
-            WHERE id = ? AND utilisateur_id = ?
-        ")->execute([
-            $valeurs['titre'],
-            $valeurs['description_courte'],
-            $valeurs['contenu_complet'],
-            $valeurs['image'],
-            $valeurs['categorie_id'],
-            $id_mod,
-            $editeur_id
-        ]);
-        $_SESSION['flash'] = ['type' => 'succes', 'message' => 'Article modifié avec succès !'];
-        header("Location: article.php");
-        exit;
-    }
-    $action  = 'modifier';
-    $id_edit = $id_mod;
-}
-
-// ═══════════════════════════════════════════════
-// DONNÉES POUR L'AFFICHAGE
-// ═══════════════════════════════════════════════
-$cats = $pdo->query("SELECT * FROM categorie ORDER BY nom ASC")->fetchAll();
-
-$valeurs = $valeurs ?? [];
-if ($action === 'modifier' && $id_edit > 0 && empty($erreurs)) {
-    $s = $pdo->prepare("SELECT * FROM article WHERE id = ? AND utilisateur_id = ?");
-    $s->execute([$id_edit, $editeur_id]);
-    $article_edit = $s->fetch();
-    if (!$article_edit) { header("Location: article.php"); exit; }
-    $valeurs = $article_edit;
-}
-
-$mes_articles = [];
-if ($action === 'liste') {
-    $s = $pdo->prepare("
-        SELECT article.*, categorie.nom AS categorie
-        FROM article
-        LEFT JOIN categorie ON article.categorie_id = categorie.id
-        WHERE article.utilisateur_id = ?
-        ORDER BY date DESC
-    ");
-    $s->execute([$editeur_id]);
-    $mes_articles = $s->fetchAll();
-}
-
-$flash = $_SESSION['flash'] ?? null;
-unset($_SESSION['flash']);
-
-$titres = [
-    'liste'    => '✍️ Mes articles',
-    'ajouter'  => '📝 Nouvel article',
-    'modifier' => '✏️ Modifier l\'article',
-];
+$stmt = $pdo->query("SELECT * FROM article ORDER BY date");
+$articles = $stmt->fetchAll();
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -219,7 +30,7 @@ $titres = [
     <h1><?= $titres[$action] ?? 'Articles' ?></h1>
     <div style="display:flex; gap:.75rem; align-items:center; flex-wrap:wrap;">
         <?php if ($action !== 'liste'){ ?>
-            <a href="article.php" class="btn-retour">← Mes articles</a>
+            <a href="article.php" class="btn-retour">← les articles</a>
         <?php } ?>
         <?php if ($action === 'liste'){ ?>
             <a href="article.php?action=ajouter" class="btn-editeur">+ Nouvel article</a>
@@ -259,7 +70,7 @@ $titres = [
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($mes_articles as $art): ?>
+                    <?php foreach ($articles as $art): ?>
                         <tr>
                             <td>
                                 <?php if ($art['image']): ?>

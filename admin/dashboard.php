@@ -126,15 +126,15 @@ $derniers_users = $pdo->query(
                     <h2>📄 Derniers articles</h2>
                     <a href="../editeur/article.php?action=ajouter" class="dcard-btn dcard-btn--primary">+ Ajouter</a>
                 </div>
-                <?php if (empty($derniers_articles)): ?>
+                <?php if (empty($derniers_articles)){  ?>
                     <p class="dash-empty">Aucun article pour l'instant.</p>
-                <?php else: ?>
+                <?php }else{  ?>
                 <table class="dash-table">
                     <thead>
                         <tr><th>Titre</th><th>Catégorie</th><th>Auteur</th><th>Date</th></tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($derniers_articles as $art): ?>
+                        <?php foreach ($derniers_articles as $art){  ?>
                         <tr>
                             <td>
                                 <a href="../acceuil/voir_article.php?id=<?= (int)$art['id'] ?>" class="dash-article-link">
@@ -145,10 +145,10 @@ $derniers_users = $pdo->query(
                             <td><?= htmlspecialchars($art['auteur_prenom'] . ' ' . $art['auteur_nom']) ?></td>
                             <td><?= htmlspecialchars($art['date']) ?></td>
                         </tr>
-                        <?php endforeach; ?>
+                        <?php } ?>
                     </tbody>
                 </table>
-                <?php endif; ?>
+                <?php } ?>
             </div>
 
             <!-- Articles par catégorie -->
@@ -157,13 +157,14 @@ $derniers_users = $pdo->query(
                     <h2>📊 Articles par catégorie</h2>
                     <a href="../categorie/listeCategorie.php" class="dcard-btn">Gérer</a>
                 </div>
-                <?php if (empty($articles_par_cat)): ?>
+                <?php if (empty($articles_par_cat)){  ?>
                     <p class="dash-empty">Aucune catégorie.</p>
-                <?php else: ?>
+                <?php }else{  ?>
                 <div class="dash-bars">
                     <?php
                     $max = max(array_column($articles_par_cat, 'total')) ?: 1;
-                    foreach ($articles_par_cat as $cat):
+                    foreach ($articles_par_cat as $cat)
+                        { 
                         $pct = round(($cat['total'] / $max) * 100);
                     ?>
                     <div class="dbar-row">
@@ -173,9 +174,9 @@ $derniers_users = $pdo->query(
                         </div>
                         <span class="dbar-count"><?= (int)$cat['total'] ?></span>
                     </div>
-                    <?php endforeach; ?>
+                    <?php } ?>
                 </div>
-                <?php endif; ?>
+                <?php } ?>
             </div>
 
         </div>

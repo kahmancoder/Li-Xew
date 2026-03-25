@@ -9,9 +9,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit;
 }
 
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$id = $_GET['id'] 
 
-if ($id <= 0) {
+if (!isset($id)) {
     header('Location: liste.php');
     exit;
 }
