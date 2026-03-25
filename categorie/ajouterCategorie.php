@@ -65,11 +65,22 @@
     <?php }
 
     if(!isset($_SESSION['id'])){
-        header("location: ../authentification/connexion.php");
+        header("Location: /Li-Xew/authentification/connexion.php");
         exit;
     }
 
-    
+    $sql = "SELECT role FROM utilisateur where id = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$_SESSION['id']]);
+
+    $role = $stmt->fetchColumn();
+
+    if ($role == "visiteur"){
+        echo "Veuillez creer un compte editeur";
+        header("Location: /Li-Xew/authentification/connexion.php");
+        exit;
+    }
+
     if (!isset($_POST['nom'])){
         formulaire("","");
     }else{

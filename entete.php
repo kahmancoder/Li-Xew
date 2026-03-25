@@ -7,12 +7,12 @@ if (session_status() === PHP_SESSION_NONE) {
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-<script src="/validation.js" defer></script>
+<script src="/Li-Xew/validation.js" defer></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($page_title) ? htmlspecialchars($page_title) . ' — ActuSite' : 'ActuSite'; ?></title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/Li-Xew/style.css">
 </head>
 <body>
 
@@ -21,14 +21,14 @@ if (session_status() === PHP_SESSION_NONE) {
 
         <!-- Logo / Nom du site -->
         <div class="header-logo">
-            <a href="/accueil.php">
-                <span class="logo-text">Li Xew</span>
+            <a href="/Li-Xew/acceuil/acceuil.php">
+                <span class="logo-text">ActuSite</span>
             </a>
         </div>
 
         <!-- Slogan -->
         <div class="header-slogan">
-           <h1> L'actualité en temps réel</h1>
+            L'actualité en temps réel
         </div>
 
         <!-- Infos utilisateur connecté -->
@@ -38,9 +38,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     <?php echo htmlspecialchars($_SESSION['prenom'] . ' ' . $_SESSION['nom']); ?>
                     — <?php echo ucfirst(htmlspecialchars($_SESSION['role'])); ?>
                 </span>
-                <a href="../authentification/deconnexion.php" class="btn btn-logout">Déconnexion</a>
+                <a href="/Li-Xew/authentification/deconnexion.php" class="btn btn-logout">Déconnexion</a>
             <?php else: ?>
-                <a href="../authentification/connexion.php" class="btn btn-login">Connexion</a>
+                <a href="/Li-Xew/authentification/connexion.php" class="btn btn-login">Connexion</a>
             <?php endif; ?>
         </div>
 

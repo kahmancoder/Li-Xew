@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
 $host = "localhost";
-$dbname = "liXew";
+$dbname = "li_xew";
 $user = "root";
 $password = "";
 

@@ -2,11 +2,10 @@
 // utilisateurs/supprimer.php — Supprimer un utilisateur (admin uniquement)
 require_once '../entete.php';
 require_once '../db.php';
-require_once '../style.css';
 
 // Protection : admin uniquement
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../connexion.php');
+    header('Location: /Li-Xew/authentification/connexion.php');
     exit;
 }
 

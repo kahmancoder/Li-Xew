@@ -58,8 +58,8 @@ function paginationUrl(int $p, int $cat): string {
 }
 
 // ─── Rôle de l'utilisateur connecté ───
-$estConnecte = isset($_SESSION['id']);
-$role        = $estConnecte ? $_SESSION['role'] : 'visiteur';
+$estConnecte = isset($_SESSION['user_id']) || isset($_SESSION['id']);
+$role        = $_SESSION['role'] ?? 'visiteur';
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +83,7 @@ $role        = $estConnecte ? $_SESSION['role'] : 'visiteur';
                 <div class="editeur-banner-info">
                     <span class="editeur-icon">✍️</span>
                     <div>
-                        <strong>Espace éditeur</strong>
+                        <strong>Espace <?php echo"$role" ?></strong>
                         <span>Bonjour, <?= htmlspecialchars($_SESSION['prenom'] . ' ' . $_SESSION['nom']) ?> !</span>
                     </div>
                 </div>
@@ -92,9 +92,6 @@ $role        = $estConnecte ? $_SESSION['role'] : 'visiteur';
                 </a>
                 <a href="../categorie/listeCategorie.php" class="btn-editeur">
                     📄 Categorie
-                </a>
-                <a href="../utilisateurs/liste.php" class="btn-editeur">
-                    📄 Utilisateur
                 </a>
             </div>
         </div>
@@ -134,7 +131,7 @@ $role        = $estConnecte ? $_SESSION['role'] : 'visiteur';
                     <img src="../images/<?= htmlspecialchars($article['image']) ?>" alt="image">
                     <div class="card-content">
                         <h2>
-                            <a href="articles/voir.php?id=<?= $article['id'] ?>">
+                            <a href="voir_article.php?id=<?= $article['id'] ?>">
                                 <?= htmlspecialchars($article['titre']) ?>
                             </a>
                         </h2>

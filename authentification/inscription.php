@@ -85,6 +85,13 @@
                     <?php endif; ?>
                 </div>
 
+                <div class="form-group">
+                    <label for="role">Rôle <span class="requis">*</span></label>
+                    <select id="role" name="role">
+                        <option value="visiteur">Visiteur</option>
+                        <option value="editeur">Éditeur</option>
+                    </select>
+                </div>
 
                 <div class="form-actions">
                     <button type="submit" class="btn-editeur">
@@ -162,6 +169,7 @@
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([$nom, $prenom, $login, $hash, $role]);
 
+                
                 echo("inscription reussie");
             }
             catch(PDOException $e){

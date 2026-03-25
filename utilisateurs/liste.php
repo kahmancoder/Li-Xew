@@ -3,28 +3,17 @@
 $page_title = "Gestion des utilisateurs";
 require_once '../entete.php';
 require_once '../menu.php';
-require_once '../style.css';
 require_once '../db.php';
 
 // Protection : admin uniquement
-if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../authentification/connexion.php');
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    header('Location: /Li-Xew/authentification/connexion.php');
     exit;
 }
 
 $stmt = $pdo->query("SELECT * FROM utilisateur ORDER BY nom, prenom");
 $utilisateurs = $stmt->fetchAll();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href=""
-</head>
-<body>
-    
 
 <main>
     <div class="page-title">Gestion des utilisateurs</div>
@@ -95,5 +84,3 @@ $utilisateurs = $stmt->fetchAll();
 </main>
 
 <?php require_once '../pied.php'; ?>
-</body>
-</html>
