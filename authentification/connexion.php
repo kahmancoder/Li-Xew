@@ -121,7 +121,7 @@ $_SESSION['role']    = $user['role'];
 
 // Redirection selon le rôle
 if ($user['role'] === 'admin') {
-    header('Location: Li-Xew4/Li-Xew/admin/dashboard.php');
+    header('Location:  ../acceuil/acceuil.php');
 } else {
     header('Location: ../acceuil/acceuil.php');
 }

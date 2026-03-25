@@ -17,7 +17,7 @@ if ($id <= 0) {
 }
 
 // Empêcher l'admin de se supprimer lui-même
-if ($id === (int)$_SESSION['user_id']) {
+if ($id === (int)$_SESSION['id']) {
     header('Location: liste.php?erreur=auto_suppression');
     exit;
 }
@@ -29,7 +29,8 @@ if (!$stmt->fetch()) {
     header('Location: liste.php');
     exit;
 }
-
+$stmt = $pdo->prepare("UPDATE article set utilisateur_id = 1 where utilisateur_id = ?");
+$stmt->execute([$id]);
 // Suppression
 $stmt = $pdo->prepare("DELETE FROM utilisateur WHERE id = ?");
 $stmt->execute([$id]);

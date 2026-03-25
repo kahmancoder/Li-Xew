@@ -93,6 +93,9 @@ $role        = $_SESSION['role'] ?? 'visiteur';
                 <a href="../categorie/listeCategorie.php" class="btn-editeur">
                     📄 Categorie
                 </a>
+                <a href="../utilisateurs/liste.php" class="btn-editeur">
+                    📄 Utilisateur
+                </a>
             </div>
         </div>
     <?php endif; ?>
