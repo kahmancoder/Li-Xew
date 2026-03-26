@@ -21,7 +21,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
         <!-- Logo / Nom du site -->
         <div class="header-logo">
-<<<<<<< HEAD
             <a href="/acceuil/acceuil.php">
                 <h1><span class="logo-text">Li Xew</span></h1>
             </a>

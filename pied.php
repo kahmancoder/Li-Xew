@@ -15,7 +15,7 @@
     <footer class="site-footer">
         <div class="container">
             <p>
-                &copy; <?php echo date('Y'); ?> ActuSite — École Supérieure Polytechnique
+                &copy; <?php echo date('Y'); ?> Li Xew — École Supérieure Polytechnique
                 &nbsp;|&nbsp;
                 Département Génie Informatique
                 &nbsp;|&nbsp;
