@@ -39,22 +39,17 @@ $articles = $stmt->fetchAll();
     </div>
 </div>
 
-<!-- Flash -->
-<?php if ($flash){ ?>
-    <div class="flash flash-<?= htmlspecialchars($flash['type']) ?>">
-        <?= htmlspecialchars($flash['message']) ?>
-    </div>
-<?php } ?>
+
 
 <!-- ══════════════════════════════════════════
      VUE : LISTE
 ══════════════════════════════════════════ -->
 <?php if ($action === 'liste'){ ?>
-    <?php if (empty($mes_articles)){ ?>
+    <?php if (empty($articles)){ ?>
         <div class="empty-state">
-            <p>Vous n'avez encore publié aucun article.</p>
+            <p>Il y a aucun article.</p>
             <a href="article.php?action=ajouter" class="btn-editeur" style="margin-top:1rem; display:inline-flex;">
-                + Rédiger mon 1er article
+                + Rédiger le premier article
             </a>
         </div>
     <?php } else { ?>
@@ -85,7 +80,16 @@ $articles = $stmt->fetchAll();
                                     <?= htmlspecialchars($art['titre']) ?>
                                 </a>
                             </td>
-                            <td><span class="badge-cat"><?= htmlspecialchars($art['categorie']) ?></span></td>
+                            <td>
+                                <span class="badge-cat">
+                                    <?php
+                                    $stmt = $pdo->prepare("SELECT nom FROM categorie WHERE id = ?");
+                                    $stmt->execute([$art['categorie_id']]);
+                                    $nomCategorie = $stmt->fetch(PDO::FETCH_ASSOC);
+                                    echo htmlspecialchars($nomCategorie['nom']);
+                                    ?>
+                                </span>
+                            </td>
                             <td class="date-cell"><?= htmlspecialchars($art['date']) ?></td>
                             <td class="actions-cell">
                                 <a href="article.php?action=modifier&id=<?= $art['id'] ?>" class="btn-action btn-edit">
