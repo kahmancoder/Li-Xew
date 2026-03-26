@@ -130,8 +130,6 @@
                     exit("Champs mot de passe manquant");
                 }elseif(!$confirmer_mdp){
                     exit("Champs confirmer mot de passe manquant");
-                }elseif(!$role){
-                    exit("Champs role manquant");
                 }
 
                 $sql = "SELECT id FROM utilisateur WHERE login = ?";
@@ -155,17 +153,17 @@
 
                 $hash = password_hash($mot_de_passe, PASSWORD_BCRYPT);
 
-                $sql = "INSERT INTO utilisateur (nom,prenom, login, password, role) VALUES (?,?,?,?,?)";
+                $sql = "INSERT INTO utilisateur (nom,prenom, login, password) VALUES (?,?,?,?)";
                 $stmt = $pdo->prepare($sql);
-                $stmt->execute([$nom, $prenom, $login, $hash, $role]);
-
+                $stmt->execute([$nom, $prenom, $login, $hash]);
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 $_SESSION['id'] = $user['id'];
                 $_SESSION['id']      = $user['id'];      // compatibilité avec les pages existantes
                 $_SESSION['nom']     = $user['nom'];
                 $_SESSION['prenom']  = $user['prenom'];
                 $_SESSION['login']   = $user['login'];
                 $_SESSION['role']    = $user['role'];
-                header("location: acceuil/acceuil.php");
+                header("location: ../acceuil/acceuil.php");
             }
             catch(PDOException $e){
                 echo "Erreur : " . $e->getMessage();
