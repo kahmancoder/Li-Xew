@@ -3,7 +3,7 @@
     require_once "../db.php";
     
     if(!isset($_SESSION['id'])){
-        header("location: connexion.php");
+        header("Location: /Li-Xew/authentification/connexion.php");
         exit;
     }
     $sql = "SELECT role FROM utilisateur where id = ?";
@@ -12,8 +12,10 @@
 
     $role = $stmt->fetchColumn();
 
-    if ($role !== "admin"){
-        die ("Seul l'admin peut supprimer une categorie");
+    if ($role == "visiteur"){
+        echo "Veuillez creer un compte editeur";
+        header("Location: /Li-Xew/authentification/connexion.php");
+        exit;
     }
     if (!isset($_GET['nom'])){
         die ("Pas de parametre");

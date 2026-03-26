@@ -77,7 +77,7 @@
     <?php }
 
     if(!isset($_SESSION['id'])){
-        header("location: ../authentification/connexion.php");
+        header("Location: /Li-Xew/authentification/connexion.php");
         exit;
     }
 
@@ -87,8 +87,9 @@
 
     $role = $stmt->fetchColumn();
 
-    if ($role !== "admin"){
-        die("Seul l'admin peut modifier");
+    if ($role === "visiteur"){
+        echo "<script>alert('Veuillez créer un compte éditeur'); window.location='../authentification/connexion.php';</script>";
+        exit;
     }
 
     if (!isset($_POST['nom'])){

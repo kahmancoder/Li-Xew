@@ -35,15 +35,14 @@
                 <thead>
                     <tr>
                         <th>Nom</th>
-                        <?php if($_SESSION['role'] === "admin"){?><th>Modifier</th>
-                        <th>Supprimer</th> <?php } ?>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach($categories as $categorie): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($categorie['nom']); ?></td>
-                            <?php if($_SESSION['role'] === "admin"){?>
                             <td>
                                 <a class="action-modifier"
                                    href="modifierCategorie.php?nom=<?php echo urlencode($categorie['nom']); ?>">
@@ -56,7 +55,6 @@
                                    <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             </td>
-                            <?php } ?>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
