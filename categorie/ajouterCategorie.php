@@ -8,14 +8,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter une catégorie — Le Journal</title>
+    <title>Ajouter une catégorie — Li Xew</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
     <div class="journal-header">
-        <div class="journal-title">Le Journal</div>
+        <div class="journal-title">Li Xew</div>
         <div class="journal-ornament">— ◆ —</div>
     </div>
 
@@ -55,7 +55,7 @@
         </div>
 
         <div class="journal-footer">
-            &copy; <?php echo date('Y'); ?> Le Journal — Administration
+            &copy; <?php echo date('Y'); ?> Li Xew — Administration
         </div>
 
     </div>
