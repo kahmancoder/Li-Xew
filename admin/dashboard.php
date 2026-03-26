@@ -3,7 +3,7 @@ $page_title = "Tableau de bord";
 require_once '../db.php';
 require_once '../entete.php';
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
     header('Location: ../authentification/connexion.php');
     exit;
 }
@@ -232,7 +232,7 @@ $derniers_users = $pdo->query(
                         <span class="duser-role duser-role--<?= $u['role'] ?>"><?= ucfirst($u['role']) ?></span>
                         <div class="duser-actions">
                             <a href="../utilisateurs/modifier.php?id=<?= (int)$u['id'] ?>" class="daction-btn">✏️</a>
-                            <?php if ($u['id'] !== (int)$_SESSION['user_id']): ?>
+                            <?php if ($u['id'] !== (int)$_SESSION['id']): ?>
                             <a href="../utilisateurs/supprimer.php?id=<?= (int)$u['id'] ?>"
                                class="daction-btn daction-btn--del"
                                onclick="return confirm('Supprimer cet utilisateur ?')">🗑️</a>
