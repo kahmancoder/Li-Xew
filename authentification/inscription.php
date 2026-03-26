@@ -85,14 +85,6 @@
                     <?php endif; ?>
                 </div>
 
-                <div class="form-group">
-                    <label for="role">Rôle <span class="requis">*</span></label>
-                    <select id="role" name="role">
-                        <option value="visiteur">Visiteur</option>
-                        <option value="editeur">Éditeur</option>
-                    </select>
-                </div>
-
                 <div class="form-actions">
                     <button type="submit" class="btn-editeur">
                         <i class="fa-solid fa-user-plus"></i> S'inscrire
@@ -128,8 +120,6 @@
                 $login = $_POST['login'];
                 $mot_de_passe = $_POST['password'];
                 $confirmer_mdp = $_POST['confirmer_mdp'];
-                $role = $_POST['role'];
-
                 if (!$nom){
                     exit("Champs Nom manquant");
                 }elseif(!$prenom){
@@ -169,8 +159,13 @@
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([$nom, $prenom, $login, $hash, $role]);
 
-                
-                echo("inscription reussie");
+                $_SESSION['id'] = $user['id'];
+                $_SESSION['id']      = $user['id'];      // compatibilité avec les pages existantes
+                $_SESSION['nom']     = $user['nom'];
+                $_SESSION['prenom']  = $user['prenom'];
+                $_SESSION['login']   = $user['login'];
+                $_SESSION['role']    = $user['role'];
+                header("location: acceuil/acceuil.php");
             }
             catch(PDOException $e){
                 echo "Erreur : " . $e->getMessage();

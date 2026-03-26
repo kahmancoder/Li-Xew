@@ -112,7 +112,7 @@ if (!$user || !password_verify($mot_de_passe, $user['password'])) {
 }
 
 // ── Création de la session (déjà démarrée par db.php) ──────────────────────
-$_SESSION['user_id'] = $user['id'];
+$_SESSION['id'] = $user['id'];
 $_SESSION['id']      = $user['id'];      // compatibilité avec les pages existantes
 $_SESSION['nom']     = $user['nom'];
 $_SESSION['prenom']  = $user['prenom'];

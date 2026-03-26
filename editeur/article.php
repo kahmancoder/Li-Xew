@@ -92,8 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_ajouter'])) {
 
     if (empty($erreurs)) {
         $pdo->prepare("
-            INSERT INTO article (titre, description_courte, contenu_complet, image, categorie_id, utilisateur_id, date)
-            VALUES (?, ?, ?, ?, ?, ?, NOW())
+            INSERT INTO article (titre, description_courte, contenu_complet, image, categorie_id, utilisateur_id)
+            VALUES (?, ?, ?, ?, ?, ?)
         ")->execute([
             $valeurs['titre'],
             $valeurs['description_courte'],

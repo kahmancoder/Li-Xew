@@ -32,6 +32,7 @@ CREATE TABLE `article` (
   `titre` varchar(50) NOT NULL,
   `description_courte` text DEFAULT NULL,
   `contenu_complet` text NOT NULL,
+  `image` varchar(255),
   `utilisateur_id` int(11) NOT NULL,
   `categorie_id` int(11) NOT NULL,
   `date` date DEFAULT current_timestamp()
@@ -60,7 +61,7 @@ CREATE TABLE `utilisateur` (
   `prenom` varchar(255) NOT NULL,
   `login` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('visiteur','editeur','admin') DEFAULT 'visiteur'
+  `role` enum('editeur','admin') DEFAULT 'editeur'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
