@@ -34,7 +34,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
         <!-- Infos utilisateur connecté -->
         <div class="header-user">
-            <?php if (isset($_SESSION['user_id'])): ?>
+            <?php if (isset($_SESSION['id'])): ?>
                 <span class="user-badge role-<?php echo htmlspecialchars($_SESSION['role']); ?>">
                     <?php echo htmlspecialchars($_SESSION['prenom'] . ' ' . $_SESSION['nom']); ?>
                     — <?php echo ucfirst(htmlspecialchars($_SESSION['role'])); ?>

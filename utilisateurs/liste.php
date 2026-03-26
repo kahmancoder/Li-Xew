@@ -6,7 +6,7 @@ require_once '../menu.php';
 require_once '../db.php';
 
 // Protection : admin uniquement
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
     header('Location: /Li-Xew/authentification/connexion.php');
     exit;
 }

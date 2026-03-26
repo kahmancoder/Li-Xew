@@ -60,7 +60,7 @@ function paginationUrl(int $p, int $cat, string $q): string {
     return '?' . http_build_query($params);
 }
 
-$estConnecte = isset($_SESSION['user_id']) || isset($_SESSION['id']);
+$estConnecte = isset($_SESSION['id']) || isset($_SESSION['id']);
 $role        = $_SESSION['role'] ?? 'visiteur';
 ?>
 <!DOCTYPE html>
