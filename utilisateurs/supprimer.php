@@ -4,7 +4,14 @@ require_once '../entete.php';
 require_once '../db.php';
 require_once '../style.css';
 
-// Protection : admin uniquement
+
+
+
+
+
+
+
+//  qn,e; : admin uniquement
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header('Location: ../connexion.php');
     exit;

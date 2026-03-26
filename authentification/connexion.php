@@ -104,5 +104,8 @@
 
         session_start();
         $_SESSION['id'] = $user['id'];
-        echo "Connexion réussie";
+        $_SESSION['prenom'] = $user['prenom'];
+        $_SESSION['nom'] = $user['nom'];
+        $_SESSION['role'] = $user['role'];
+        header("location: ../acceuil/acceuil.php");
     }
